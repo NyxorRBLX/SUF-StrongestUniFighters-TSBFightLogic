@@ -1,8 +1,9 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
-
 local LocalPlayer = Players.LocalPlayer
+local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
 local moveDirection = Vector3.new(0, 0, 0)
 local moveSpeed = 50
 local maxSpeed = 100
@@ -33,6 +34,31 @@ local normalBoostMultiplier = 2
 local idleAnimationId = "rbxassetid://17124063826"
 local idleAnimationTrack
 
+-- sounds start
+
+local HttpService = game:GetService("HttpService")
+
+local BO = Instance.new("Sound", character)
+local BU = Instance.new("Sound", character)
+local ID = Instance.new("Sound", character)
+
+local url1 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/Boost.mp3"
+local url2 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/Burst.mp3"
+local url3 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/Flight.mp3"
+
+writefile("Boost.mp3", game:HttpGet(url1))
+writefile("Burst.mp3", game:HttpGet(url2))
+writefile("Flight.mp3", game:HttpGet(url3))
+
+BO.SoundId = getcustomasset('Boost.mp3') 
+BU.SoundId = getcustomasset('Burst.mp3')
+ID.SoundId = getcustomasset('Flight.mp3')
+ID.Looped = true
+
+--sounds end
+
+
+
 -- Movement logic
 local function moveCharacter()
 	if movementPaused then return end
@@ -57,7 +83,7 @@ local function toggleFlight()
 	isFlightActive = not isFlightActive
 	if isFlightActive then
 		moveConnection = RunService.RenderStepped:Connect(moveCharacter)
-
+		ID:Play()
 		local character = LocalPlayer.Character
 		if character then
 			local humanoid = character:FindFirstChildOfClass("Humanoid")
@@ -65,10 +91,12 @@ local function toggleFlight()
 				local animation = Instance.new("Animation")
 				animation.AnimationId = idleAnimationId
 				idleAnimationTrack = humanoid:LoadAnimation(animation)
+				idleAnimationTrack.Priority = Enum.AnimationPriority.Action2
 				idleAnimationTrack:Play()
 			end
 		end
 	else
+		ID:Stop()
 		if moveConnection then
 			moveConnection:Disconnect()
 			moveConnection = nil
@@ -87,13 +115,12 @@ local function activateNormalBoost()
 	if not normalBoostCooldown and not maxBoostActive then
 		normalBoostActive = true
 		moveSpeed = moveSpeed * normalBoostMultiplier
-
+		BU:Play()
+		BU.TimePosition = 0.8
 		local character = LocalPlayer.Character
 		if character then
 			local humanoid = character:FindFirstChildOfClass("Humanoid")
 			if humanoid then
-				print("Normal boost activated!")
-
 				task.delay(normalBoostDuration, function()
 					if normalBoostActive then
 						normalBoostActive = false
@@ -118,7 +145,7 @@ local function activateMaxBoost()
 		moveSpeed = moveSpeed * boostMultiplier
 		maxSpeed = maxBoostSpeed
 		acceleration = acceleration * boostMultiplier
-
+		BO:Play()
 		local character = LocalPlayer.Character
 		if character then
 			local humanoid = character:FindFirstChildOfClass("Humanoid")
@@ -127,7 +154,7 @@ local function activateMaxBoost()
 				animation.AnimationId = maxBoostAnimationId
 				local animationTrack = humanoid:LoadAnimation(animation)
 				animationTrack:Play()
-				animationTrack.Priority = Enum.AnimationPriority.Action2
+				animationTrack.Priority = Enum.AnimationPriority.Action4
 
 				task.delay(boostDuration, function()
 					if maxBoostActive then
@@ -234,6 +261,7 @@ UserInputService.InputEnded:Connect(function(input)
 		end
 	end
 end)
+
 RunService.Heartbeat:Connect(function()
 	local character = LocalPlayer.Character
 	if character then
@@ -243,3 +271,4 @@ RunService.Heartbeat:Connect(function()
 		end
 	end
 end)
+
