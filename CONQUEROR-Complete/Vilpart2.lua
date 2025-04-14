@@ -7,13 +7,65 @@ local gui = Player.PlayerGui
 local screenGui = gui.ScreenGui
 local isUlted = character:GetAttribute("Ulted")
 
+-- sounds start
+
+local HttpService = game:GetService("HttpService")
+
+local S1 = Instance.new("Sound", character)
+local S2 = Instance.new("Sound", character)
+local S3 = Instance.new("Sound", character)
+local S4 = Instance.new("Sound", character)
+local SU = Instance.new("Sound", character)
+local SD = Instance.new("Sound", character)
+local ULT = Instance.new("Sound", character)
+local ULT2 = Instance.new("Sound", character)
+
+local url1 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/AltWoosh.mp3"
+local url2 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/AltWoosh2.mp3"
+local url3 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/AltWoosh3.mp3"
+local url4 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/AltWoosh.mp3"
+local urlSU = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/Slam2.mp3"
+local urlSD = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/SlamHard1.mp3"
+local urlULT = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/LeatherCrunch.mp3"
+local urlULT2 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Voice/500.mp3"
+
+writefile("AltWoosh.mp3", game:HttpGet(url1))
+writefile("AltWoosh2.mp3", game:HttpGet(url2))
+writefile("AltWoosh3.mp3", game:HttpGet(url3))
+writefile("Slam2.mp3", game:HttpGet(urlSU))
+writefile("SlamHard1.mp3", game:HttpGet(urlSD))
+writefile("LeatherCrunch.mp3", game:HttpGet(urlULT))
+writefile("500.mp3", game:HttpGet(urlULT2))
+
+S1.SoundId = getcustomasset('AltWoosh.mp3') 
+S2.SoundId = getcustomasset('AltWoosh2.mp3')
+S3.SoundId = getcustomasset('AltWoosh3.mp3')
+S4.SoundId = getcustomasset('AltWoosh.mp3')
+SU.SoundId = getcustomasset('Slam2.mp3')
+SD.SoundId = getcustomasset('SlamHard1.mp3')
+ULT.SoundId = getcustomasset('LeatherCrunch.mp3')
+ULT2.SoundId = getcustomasset('500.mp3')
+
+
+--sounds end
+
+local idle = Instance.new("Animation")
+idle.AnimationId = "rbxassetid://17124061663"
+
+local IdleTrack = humanoid:LoadAnimation(idle)
+IdleTrack.Looped = true
+IdleTrack.Priority = Enum.AnimationPriority.Action
+local function playAnimation()
+	IdleTrack:Play()
+end
+
 local Dash = "12772543293" 
 local Dash2 = "17838006839" 
 local m1 = "13491635433" 
 local m2 = "17325522388"
 local m3 = "14001963401"
 local m4 = "15162694192"
-local ult = "17292505729"
+local ult = "80518687127249"
 local slam = "16571909908"
 local upper = "10503381238"
 pcall(function() getgenv().dash:Disconnect() end)
@@ -36,9 +88,9 @@ getgenv().dash = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		loadedAnim2:AdjustSpeed(1)
 		task.wait(0.1)
 		loadedAnim1:Stop()
-		task.wait(0.5)
+		task.wait(0.4)
 		loadedAnim2:Stop()
-
+		playAnimation()
 	end
 end)
 getgenv().two = humanoid.AnimationPlayed:Connect(function(animationTrack)
@@ -46,7 +98,7 @@ getgenv().two = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		local anim = Instance.new("Animation")
 		anim.AnimationId = "rbxassetid://" .. m2
 		local loadedAnim = humanoid:LoadAnimation(anim)
-		
+
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
 		loadedAnim:AdjustSpeed(1.5)
@@ -58,10 +110,7 @@ getgenv().one = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		local anim = Instance.new("Animation")
 		anim.AnimationId = "rbxassetid://" .. m1
 		local loadedAnim = humanoid:LoadAnimation(anim)
-		local S = Instance.new("Sound", character)
-
-		S.SoundId = "rbxassetid://140546969502476"
-		S:Play()
+		S1:Play()
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
 		loadedAnim:AdjustSpeed(1.5)
@@ -73,10 +122,7 @@ getgenv().two = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		local anim = Instance.new("Animation")
 		anim.AnimationId = "rbxassetid://" .. m2
 		local loadedAnim = humanoid:LoadAnimation(anim)
-		local S = Instance.new("Sound", character)
-
-		S.SoundId = "rbxassetid://76551316507680"
-		S:Play()
+		S2:Play()
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
 		loadedAnim:AdjustSpeed(1.5)
@@ -88,10 +134,7 @@ getgenv().three = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		local anim = Instance.new("Animation")
 		anim.AnimationId = "rbxassetid://" .. m3
 		local loadedAnim = humanoid:LoadAnimation(anim)
-		local S = Instance.new("Sound", character)
-
-		S.SoundId = "rbxassetid://6938585721"
-		S:Play()
+		S3:Play()
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
 		loadedAnim:AdjustSpeed(1.7)
@@ -103,10 +146,7 @@ getgenv().four = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		local anim = Instance.new("Animation")
 		anim.AnimationId = "rbxassetid://" .. m4
 		local loadedAnim = humanoid:LoadAnimation(anim)
-		local S = Instance.new("Sound", character)
-
-		S.SoundId = "rbxassetid://90992723091327"
-		S:Play()
+		S4:Play()
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
 		loadedAnim:AdjustSpeed(1.5)
@@ -118,17 +158,11 @@ getgenv().ult = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		local anim = Instance.new("Animation")
 		anim.AnimationId = "rbxassetid://" .. ult
 		local loadedAnim = humanoid:LoadAnimation(anim)
-		local S = Instance.new("Sound", character)
-		local S2 = Instance.new("Sound", character)
-		S2.Volume = 0.1
-		
-		S2.SoundId = "rbxassetid://117807300745911"
-		S.SoundId = "rbxassetid://8541282266"
-		S2:Play()
-		S:Play()
+		ULT:Play()
+		ULT2:Play()
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
-		loadedAnim:AdjustSpeed(1.5)
+		loadedAnim:AdjustSpeed(.8)
 	end
 end)
 pcall(function() getgenv().slam:Disconnect() end)
@@ -138,8 +172,7 @@ getgenv().ult = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		anim.AnimationId = "rbxassetid://" .. slam
 		local loadedAnim = humanoid:LoadAnimation(anim)
 		local S = Instance.new("Sound", character)
-		S.SoundId = "rbxassetid://136740106410252"
-		S:Play()
+		SD:Play()
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
 		loadedAnim.TimePosition = 1.65
@@ -152,9 +185,7 @@ getgenv().upper = humanoid.AnimationPlayed:Connect(function(animationTrack)
 		local anim = Instance.new("Animation")
 		anim.AnimationId = "rbxassetid://" .. upper
 		local loadedAnim = humanoid:LoadAnimation(anim)
-		local S = Instance.new("Sound", character)
-		S.SoundId = "rbxassetid://135344570425077"
-		S:Play()
+		SU:Play()
 		loadedAnim.Priority = Enum.AnimationPriority.Action2
 		loadedAnim:Play()
 		loadedAnim:AdjustSpeed(1.1)
