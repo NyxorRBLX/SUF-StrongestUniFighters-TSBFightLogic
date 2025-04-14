@@ -4,6 +4,103 @@ local CONFIG = {
 	BackDashBoostSpeed = 20, -- second front dash boost for Crimson Flash
 	BoostDuration = .3,        -- Duration of first boost
 }
+-- sounds start
+
+local HttpService = game:GetService("HttpService")
+
+local S11 = Instance.new("Sound", character)
+local S12 = Instance.new("Sound", character)
+local S21 = Instance.new("Sound", character)
+local S31 = Instance.new("Sound", character)
+local S32 = Instance.new("Sound", character)
+local S33 = Instance.new("Sound", character)
+local S41 = Instance.new("Sound", character)
+local S42 = Instance.new("Sound", character)
+
+
+local url11 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Voice/Die.mp3"
+local url12 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/SlamHard1.mp3"
+local url21 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Voice/Superior.mp3"
+local url31 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/SkullCrush2.mp3"
+local url32 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Voice/Pay%20attention.mp3"
+local url33 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Voice/Get%20Up%20Youre%20Not%20Done.mp3"
+local url41 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Effects/SlamHard1.mp3"
+local url42 = "https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/SFX/Voice/Insig.mp3"
+
+
+
+writefile("Die.mp3", game:HttpGet(url11))
+writefile("SlamHard1.mp3", game:HttpGet(url12))
+writefile("Superior.mp3", game:HttpGet(url21))
+writefile("SkullCrush2.mp3", game:HttpGet(url31))
+writefile("Payattention.mp3", game:HttpGet(url32))
+writefile("Getup.mp3", game:HttpGet(url33))
+writefile("SlamHard1.mp3", game:HttpGet(url41))
+writefile("Insig.mp3", game:HttpGet(url42))
+
+
+S11.Parent = game.Players.LocalPlayer.Character
+S12.Parent = game.Players.LocalPlayer.Character
+S21.Parent = game.Players.LocalPlayer.Character
+S31.Parent = game.Players.LocalPlayer.Character
+S32.Parent = game.Players.LocalPlayer.Character
+S33.Parent = game.Players.LocalPlayer.Character
+S41.Parent = game.Players.LocalPlayer.Character
+S42.Parent = game.Players.LocalPlayer.Character
+
+
+S11.SoundId = getcustomasset('Die.mp3') 
+S12.SoundId = getcustomasset('SlamHard1.mp3')
+S21.SoundId = getcustomasset('Superior.mp3')
+S31.SoundId = getcustomasset('Payattention.mp3')
+S32.SoundId = getcustomasset('SkullCrush2.mp3')
+S33.SoundId = getcustomasset('Getup.mp3')
+S41.SoundId = getcustomasset('SlamHard1.mp3')
+S42.SoundId = getcustomasset('Insig.mp3')
+
+
+--sounds end
+
+
+
+local Camera = workspace.CurrentCamera
+local RunService = game:GetService("RunService")
+
+local duration = .5 -- total shake duration in seconds
+local maxIntensity = 2 -- starting shake strength
+local frequency = 33 -- updates per second
+
+local function quadIn(t)
+	return t * t -- simple Quad In easing function
+end
+
+local function shakeScreen()
+	local startTime = tick()
+	local connection
+
+	connection = RunService.RenderStepped:Connect(function()
+		local elapsed = tick() - startTime
+		local progress = math.clamp(elapsed / duration, 0, 1)
+
+		if progress >= 1 then
+			Camera.CFrame = Camera.CFrame -- reset
+			connection:Disconnect()
+			return
+		end
+
+		local easedProgress = quadIn(progress)
+		local intensity = maxIntensity * (1 - easedProgress)
+
+		local randomOffset = Vector3.new(
+			math.random(-100, 100) / 100 * intensity,
+			math.random(-100, 100) / 100 * intensity,
+			math.random(-100, 100) / 100 * intensity * 0.5
+		)
+
+		Camera.CFrame = Camera.CFrame * CFrame.new(randomOffset)
+	end)
+end
+
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
@@ -12,17 +109,17 @@ local UltBar = player.PlayerGui.ScreenGui.MagicHealth.Health.Bar.Bar
 local UltGlow = player.PlayerGui.ScreenGui.MagicHealth.Health.Glow
 local UltG = player.PlayerGui.ScreenGui.MagicHealth.Ult
 local UltText = player.PlayerGui.ScreenGui.MagicHealth.TextLabel
-UltText.Text = "TRULY INVINCIBLE"
-UltText.TextColor3 = Color3.fromRGB(255, 226, 24)
+UltText.Text = "I CAN ALWAYS MAKE ANOTHER"
+UltText.TextColor3 = Color3.fromRGB(255, 60, 42)
 UltText.Position = UDim2.new(UltText.Position.X.Scale, UltText.Position.X.Offset, UltText.Position.Y.Scale, 22)
 UltText.TextSize = 20
 UltText.TextLabel.TextSize = 20
 UltG.TextSize = 0
 UltG.TextLabel.TextSize = 0
-local darkBlue = Color3.fromRGB(0, 102, 204) -- Blue
-local lightBlue = Color3.fromRGB(32, 118, 255) -- Light Blue
-UltBar.ImageColor3 = lightBlue
-UltGlow.ImageColor3 = Color3.fromRGB(111, 111, 255)
+local darkBlue = Color3.fromRGB(204, 204, 204) -- Blue
+local lightBlue = Color3.fromRGB(255, 255, 255) -- Light Blue
+UltBar.ImageColor3 = Color3.fromRGB(255, 255, 255)
+UltGlow.ImageColor3 = darkBlue
 
 local tweenInfo = TweenInfo.new(
 	2.5, -- duration
@@ -44,10 +141,24 @@ local skillThree = Hotbar["3"].Base
 local skillFour = Hotbar["4"].Base
 
 
-skillOne.ToolName.Text = "Viltrum Smash"
-skillTwo.ToolName.Text = "Flow Barrage"
-skillThree.ToolName.Text = "Omni Kick"
-skillFour.ToolName.Text = "Knuckle Maker"
+skillOne.ToolName.Text = "Planet Breaker"
+skillTwo.ToolName.Text = "Honor Rush"
+skillThree.ToolName.Text = "Atmos Kick"
+skillFour.ToolName.Text = "Skydrive Upper"
+
+local character = player.Character
+
+local humanoid = character:FindFirstChildOfClass("Humanoid")
+
+local idle = Instance.new("Animation")
+idle.AnimationId = "rbxassetid://17124061663"
+
+local IdleTrack = humanoid:LoadAnimation(idle)
+IdleTrack.Looped = true
+
+local function playAnimation()
+	IdleTrack:Play()
+end
 
 -- SKILL 1 --
 
@@ -63,6 +174,9 @@ local function playAnimationSequence(player)
 	if isAnimationSequenceActive then return end
 	isAnimationSequenceActive = true
 
+
+
+
 	local character = player.Character
 	if not character then return end
 
@@ -74,13 +188,9 @@ local function playAnimationSequence(player)
 		new1 = Instance.new("Animation"),
 		new2 = Instance.new("Animation")
 	}
-	local sounds = {
-		S1 = Instance.new("Sound", character),
-		S2 = Instance.new("Sound", character)
-	}
 
-	sounds.S1.SoundId = "rbxassetid://117605899760975" 
-	sounds.S2.SoundId = "rbxassetid://5278196952"
+
+
 
 	animations.new1.AnimationId = "rbxassetid://12983333733"
 	animations.new2.AnimationId = "rbxassetid://17278415853"
@@ -93,14 +203,19 @@ local function playAnimationSequence(player)
 	for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
 		track:Stop()
 	end
-
+	
+	
 
 	task.spawn(function()
+
+		S11:Play()
+		S12:Play()
+		S12.Volume = 1.5
 		animTracks.new1:Play()
-		sounds.S1:Play()
 		animTracks.new1.TimePosition = 4
 		animTracks.new1:AdjustSpeed(2.8)
 		task.wait(0.3)
+		shakeScreen()
 		animTracks.new2:Play()
 		animTracks.new2.TimePosition = 11
 		animTracks.new2:AdjustSpeed(2.4)
@@ -114,6 +229,8 @@ local function playAnimationSequence(player)
 		for _, track in pairs(animTracks) do
 			track:Stop()
 		end
+		
+		playAnimation()
 	end)
 end
 
@@ -161,11 +278,7 @@ local function playAnimationSequence3(player)
 	local animations = {
 		drop = Instance.new("Animation")
 	}
-	local sounds = {
-		S1 = Instance.new("Sound", character)
-	}
 
-	sounds.S1.SoundId = "rbxassetid://90992723091327"
 
 	animations.drop.AnimationId = "rbxassetid://16310343179"
 
@@ -220,11 +333,13 @@ local function playAnimationSequence3(player)
 	-- Animation sequence
 	task.spawn(function()
 		animTracks.Drop:Play()
-		sounds.S1:Play()
+		S31:Play()
 		animTracks.Drop.TimePosition = 2.3
+		S32:Play()
+		S32.Volume = 1.5
 		LockOn2()
 		task.wait(1.3 + PLAY_DURATION)
-
+		S33:Play()
 		for _, track in pairs(animTracks) do
 			track:Stop()
 		end
@@ -233,6 +348,7 @@ local function playAnimationSequence3(player)
 		for _, track in pairs(animTracks) do
 			track:Stop()
 		end
+		playAnimation()
 	end)
 end
 
@@ -277,13 +393,6 @@ local function playAnimationSequence2(player)
 		new2 = Instance.new("Animation"),
 		new3 = Instance.new("Animation")
 	}
-	local sounds = {
-		S1 = Instance.new("Sound", character),
-		S2 = Instance.new("Sound", character)
-	}
-
-	sounds.S1.SoundId = "rbxassetid://72892830917317"
-	sounds.S2.SoundId = "rbxassetid://5278196952"
 
 	animations.new1.AnimationId = "rbxassetid://18179181663"
 	animations.new2.AnimationId = "rbxassetid://13927612951"
@@ -312,7 +421,10 @@ local function playAnimationSequence2(player)
 		task.wait(0.3)
 		animTracks.new3:Stop()
 		animTracks.new1:Play()
-		sounds.S1:Play()
+		S41:Play()
+		S41.TimePosition = 0.4
+		S42.Volume = 1.2
+		S42:Play()
 		animTracks.new1.TimePosition = 0.2
 		task.wait(0.9)
 		animTracks.new2:Play()
@@ -327,6 +439,7 @@ local function playAnimationSequence2(player)
 		for _, track in pairs(animTracks) do
 			track:Stop()
 		end
+		playAnimation()
 	end)
 end
 
@@ -370,14 +483,6 @@ local function playAnimationSequence4(player)
 		new1 = Instance.new("Animation"),
 		new2 = Instance.new("Animation")
 	}
-	
-
-	local S1 = Instance.new("Sound", character)
-	local S2 = Instance.new("Sound", character)
-
-
-	S1.SoundId = "rbxassetid://87633021650739"
-	S2.SoundId = "rbxassetid://7837530737"
 
 	animations.new1.AnimationId = "rbxassetid://13560306510"
 	animations.new2.AnimationId = "rbxassetid://15090141089"
@@ -393,22 +498,21 @@ local function playAnimationSequence4(player)
 
 	task.spawn(function()
 		animTracks.new1:Play()
-		S1:Play()
+		S21:Play()
 		animTracks.new1:AdjustSpeed(2)
 		task.wait(0.34)
-		S2:Play()
 		animTracks.new1:Stop()
 		animTracks.new2:Play()
 		animTracks.new2:AdjustSpeed(20)
 		task.wait(1.1)
 		animTracks.new2:Stop()
-			
 		task.wait(PLAY_DURATION)
 		isAnimationSequenceActive = false
 
 		for _, track in pairs(animTracks) do
 			track:Stop()
 		end
+		playAnimation()
 	end)
 end
 
@@ -457,7 +561,7 @@ local function playAnimationSequenceW(player)
 		S2 = Instance.new("Sound", character)
 	}
 
-	sounds.S1.SoundId = "rbxassetid://72604971748686" 
+	sounds.S1.SoundId = "rbxassetid://85233005882388" 
 	sounds.S2.SoundId = "rbxassetid://5278196952"
 
 	animations.W1.AnimationId = "rbxassetid://17464644182"
@@ -493,6 +597,7 @@ local function playAnimationSequenceW(player)
 		for _, track in pairs(animTracks) do
 			track:Stop()
 		end
+		playAnimation()
 	end)
 end
 
@@ -509,4 +614,3 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayedW)
-
