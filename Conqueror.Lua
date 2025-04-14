@@ -1,19 +1,25 @@
-function MainEnv()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/SUF-StrongestUniFighters-TSBFightLogic/blob/main/CONQUEROR-Complete/Vilpart1.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/SUF-StrongestUniFighters-TSBFightLogic/blob/main/CONQUEROR-Complete/Vilpart2.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/SUF-StrongestUniFighters-TSBFightLogic/blob/main/CONQUEROR-Complete/Vilpart3.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/SUF-StrongestUniFighters-TSBFightLogic/blob/main/CONQUEROR-Complete/Vilpart4.lua"))()
+local Players = game:GetService("Players")
+local function playRespawnSequence(character)
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/Vilpart1.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/Vilpart2.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/Vilpart3.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/CONQUEROR-Complete/Vilpart4.lua"))()
 end
-MainEnv()
-pcall(function()
-getgenv().pepe:Disconnect()
+
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        playRespawnSequence(character)
+    end)
 end)
-getgenv().pepe = game.Players.LocalPlayer.CharacterAdded:Connect(function(c)
-repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart')
-and game.Players.LocalPlayer.Character:FindFirstChild('Humanoid')
-task.wait(.2)
-MainEnv()
-end)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/blob/main/FlightSysTemp/AirCombatFOV.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/blob/main/FlightSysTemp/AirCombatFOV.lua"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/blob/main/FlightSysTemp/AirCombatFlightV0.5.lua"))()
+
+for _, player in Players:GetPlayers() do
+    if player.Character then
+        playRespawnSequence(player.Character)
+    end
+    player.CharacterAdded:Connect(function(character)
+        playRespawnSequence(character)
+    end)
+end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/FlightSysTemp/AirCombatFOV.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/FlightSysTemp/AirCombatLockOn.Lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NyxorRBLX/SUF-StrongestUniFighters-TSBFightLogic/refs/heads/main/FlightSysTemp/AirCombatFlightV0.5.lua"))()
